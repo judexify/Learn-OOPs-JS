@@ -224,3 +224,59 @@ jude.removeTask(2);
 console.log("All tasks:", jude.listTask());
 console.log("Completed tasks:", jude.filterTasks("completed"));
 console.log("Incomplete tasks:", jude.filterTasks("inCompleted"));
+
+// CLASS EXTENDING
+class Human {
+  species = "Homo Sapien";
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  introduce() {
+    console.log(`Hi, I'm ${this.name} and I'm ${this.age} years old`);
+  }
+  sleep() {
+    console.log(`${this.name} is sleeping...`);
+  }
+}
+
+class Student extends Human {
+  constructor(name, age, grade) {
+    super(name, age);
+    this.grade = grade;
+  }
+  // polymorphism
+  introduce() {
+    console.log(
+      `Hi, I'm ${this.name} and I'm ${this.age} years old my grade is ${this.grade}`
+    );
+  } // the introduce here is different from human
+
+  study() {
+    console.log(`${this.name} is studying...`);
+  }
+}
+
+class Teacher extends Human {
+  constructor(name, age, subjectTaking) {
+    super(name, age); // inherit from human
+    this.subjectTaking = subjectTaking;
+  }
+  introduce() {
+    console.log(
+      `Hi, I'm ${this.name} and I'm ${this.age} years old my subject taking is ${this.subjectTaking}`
+    );
+  }
+
+  teach() {
+    console.log(`I'll be teaching ${this.subjectTaking}`);
+  }
+}
+
+const alice = new Student("Alice", 14, 9);
+const bob = new Teacher("Bob", 35, "Mathemeatics");
+
+alice.introduce();
+alice.sleep();
+bob.introduce();
+bob.sleep();
