@@ -104,4 +104,123 @@ class MyClass {
 // you dont need to instantiate
 MyClass.staticMethod();
 
-// using real life
+// using real life to check private and public field
+
+class WashingMachine {
+  // public field
+  brand;
+
+  // private field
+  #powerStatus = false;
+  #currentCycle = null;
+
+  constructor(brand) {
+    this.brand = brand;
+  }
+  // as a brand, the only thing you want to expose to your users is
+  start(cycle) {
+    // internal mechanisms
+    if (!this.#powerStatus) {
+      this.#turnOn;
+    }
+    this.#currentCycle = cycle;
+    // spin
+    console.log(`starting ${cycle} cycle....`);
+    this.#spin();
+    // drain
+    this.#drain();
+    // stop
+    this.stop();
+  }
+  stop() {
+    console.log("Washing Machin stopped");
+    // turn off
+    this.#turnOff();
+    console.log("Power OFF");
+  }
+  // it turns a private methods not to users
+  #turnOn() {
+    this.#powerStatus = true;
+    console.log("Power ON");
+  }
+  #turnOff() {}
+  #spin() {
+    console.log("spinning");
+  }
+  #drain() {
+    console.log("draining");
+  }
+}
+
+const lgWasher = new WashingMachine("LG");
+console.log(lgWasher);
+lgWasher.start("Quick Wash");
+
+const tasks = [
+  { name: "wash dishes", done: true },
+  { name: "wash shoes", done: false },
+  { name: "dishes", done: true },
+];
+
+const taskState = {
+  completed: (arr) => arr.filter((t) => t.done),
+  inComplete: (arr) => arr.filter((t) => !t.done),
+};
+
+const currentState = "completed";
+let result;
+
+if (currentState === "completed") {
+  result = taskState.completed(tasks);
+} else {
+  result = taskState.inComplete(tasks);
+}
+
+console.log(result);
+
+class TODOAPP {
+  #task = [];
+
+  input(task) {
+    if (this.#task.includes(task)) return;
+    this.#addItems(task);
+    return this.#task;
+  }
+
+  removeTask(index) {
+    this.#deleteItems(index);
+    return this.#task;
+  }
+  markCompleted(name) {
+    const task = this.#task.find((t) => t.taskToday === name);
+    if (task) task.done = true;
+    return this.#task;
+  }
+  listTask() {
+    return this.#task;
+  }
+
+  filterTasks(state = "all") {
+    if (state === "completed") return this.#task.filter((t) => t.done);
+    if (state === "inCompleted") return this.#task.filter((t) => !t.done);
+  }
+
+  #addItems(taskToday) {
+    this.#task.push({ taskToday, done: false });
+  }
+  #deleteItems(items) {
+    this.#task.splice(items, 1);
+  }
+}
+const jude = new TODOAPP();
+
+jude.input("go to cafe");
+jude.input("go to babe's");
+jude.input("go to church");
+jude.input("go to school");
+jude.input("buy books");
+jude.markCompleted("go to cafe");
+jude.removeTask(2);
+console.log("All tasks:", jude.listTask());
+console.log("Completed tasks:", jude.filterTasks("completed"));
+console.log("Incomplete tasks:", jude.filterTasks("inCompleted"));
